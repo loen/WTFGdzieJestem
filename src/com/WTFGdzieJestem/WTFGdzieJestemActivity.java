@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import com.WTFGdzieJestem.util.client.GoogleMapsClient;
 
 public class WTFGdzieJestemActivity extends Activity{
@@ -30,8 +31,8 @@ public class WTFGdzieJestemActivity extends Activity{
 	private static String NAME = "Name";
 	private static String TAG = "WTF_Gdzie_Jestem_Location_Listener";
 	private LocationManager locationManager;
-	private Button homeLocationButton;
-	private Button navButton;
+	private ImageButton homeLocationButton;
+	private ImageButton navButton;
 	private EditText locationText;
 	private LocationObject locationObject;
 	
@@ -50,14 +51,14 @@ public class WTFGdzieJestemActivity extends Activity{
 
 		setContentView(R.layout.main);
 		
-		homeLocationButton = (Button)findViewById(R.id.homeLocationButton);
+		homeLocationButton = (ImageButton)findViewById(R.id.homeLocationButton);
 		homeLocationButton.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
 				initializeLocationProvider(new HomeLocationListener());
 			}
 		});
-        navButton = (Button)findViewById(R.id.goHomeButton);
+        navButton = (ImageButton)findViewById(R.id.goHomeButton);
         navButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -4,13 +4,18 @@
               android:layout_height="fill_parent"
               android:orientation="vertical">
 
-    <android.widget.Button
+    <android.widget.ImageButton
             android:id="@+id/homeLocationButton"
-            android:layout_height="70px"
-            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/homeLocationButtonName"
             android:hint="@string/homeLocationButtonHint"
-            android:layout_marginBottom="20px"
+            android:layout_marginTop="5px"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="5px"
+            android:background="@drawable/home"
+            android:src="@drawable/home"
+
             />
 
     <android.widget.EditText
@@ -21,14 +26,17 @@
             android:enabled="false"
             android:editable="false"/>
 
-    <android.widget.Button
+    <android.widget.ImageButton
             android:id="@+id/goHomeButton"
-            android:layout_height="70px"
-            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/goHomeButtonName"
             android:hint="@string/goHomeButtonHint"
-            android:layout_marginTop="20px"
+            android:layout_marginTop="5px"
             android:enabled="false"
+            android:src="@drawable/bed"
+            android:background="@drawable/bed"
+            android:layout_gravity="center_horizontal"
             />
 
 </LinearLayout>
