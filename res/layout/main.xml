@@ -18,14 +18,17 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/locationTextFieldValue"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:editable="false"/>
 
     <android.widget.Button
+            android:id="@+id/goHomeButton"
             android:layout_height="70px"
             android:layout_width="fill_parent"
             android:text="@string/goHomeButtonName"
             android:hint="@string/goHomeButtonHint"
             android:layout_marginTop="20px"
+            android:enabled="false"
             />
 
 </LinearLayout>

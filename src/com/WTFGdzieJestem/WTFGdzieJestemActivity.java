@@ -13,6 +13,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,9 +31,17 @@ public class WTFGdzieJestemActivity extends Activity implements
 	private static String TAG = "WTF_Gdzie_Jestem_Location_Listener";
 	private LocationManager locationManager;
 	private Button homeLocationButton;
+	private Button navButton;
 	private EditText locationText;
+	private LocationObject locationObject;
 	
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		locationObject = getLocation();
+		locationText.setText(locationObject.getLocationName());
+	}
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -48,9 +58,37 @@ public class WTFGdzieJestemActivity extends Activity implements
 
 			}
 		});
-
+        navButton = (Button)findViewById(R.id.goHomeButton);
 		locationText = (EditText)findViewById(R.id.locationText);
-		
+		locationObject = getLocation();
+		locationText.setText(locationObject.getLocationName());
+		locationText.addTextChangedListener(new TextWatcher() {
+			
+			
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				if(locationText.getText() == null || locationText.getText().length() ==0){
+					navButton.setEnabled(false);
+				}else{
+					navButton.setEnabled(true);
+				}
+				
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	@Override
@@ -60,14 +98,8 @@ public class WTFGdzieJestemActivity extends Activity implements
 			double longitude = location.getLongitude();
 			double lattitude = location.getLatitude();
 
-			
 			String locationName = getHumanReadableLocation(longitude, lattitude);
-			SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-			SharedPreferences.Editor editor = settings.edit();
-			editor.putString(LONGITUDE, Double.toString(longitude));
-			editor.putString(LATTITUDE, Double.toString(lattitude));
-			editor.putString(NAME, locationName);
-			editor.commit();
+			saveLocation(longitude,lattitude,locationName);
 			locationText.setText(locationName);
 		}
 
@@ -117,6 +149,25 @@ public class WTFGdzieJestemActivity extends Activity implements
 		}
 	}
 
+	private void saveLocation(double longitude, double lattitude, String locationName){
+		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putString(LONGITUDE, Double.toString(longitude));
+		editor.putString(LATTITUDE, Double.toString(lattitude));
+		editor.putString(NAME, locationName);
+		editor.commit();
+	}
+	
+	private LocationObject getLocation(){
+		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		String name = settings.getString(NAME, "");
+		double longitude = Double.valueOf(settings.getString(LONGITUDE,"0"));
+		double lattitude = Double.valueOf(settings.getString(LATTITUDE,"0"));
+		LocationObject location = new LocationObject(longitude, lattitude, name);
+		return location;
+		
+	}
+	
 	private void initializeLocationProvider() {
 		try{
 		locationManager = (LocationManager) getApplicationContext()
