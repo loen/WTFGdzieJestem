@@ -1,0 +1,6 @@
+gen/com/WTFGdzieJestem/R.java
+gen/**
+*R.java
+bin/**
+*.iml
+*.idea
