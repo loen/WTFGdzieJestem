@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -21,15 +22,22 @@ import android.widget.EditText;
 public class WTFGdzieJestemActivity extends Activity implements
 		LocationListener {
 
+	private static String PREFS_NAME = "WTF";
+	private static String LONGITUDE = "Longitude";
+	private static String LATTITUDE = "Lattitude";
+	private static String NAME = "Name";
 	private static String TAG = "WTF_Gdzie_Jestem_Location_Listener";
 	private LocationManager locationManager;
 	private Button homeLocationButton;
 	private EditText locationText;
+	
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+
 		setContentView(R.layout.main);
 		
 		homeLocationButton = (Button)findViewById(R.id.homeLocationButton);
@@ -42,6 +50,7 @@ public class WTFGdzieJestemActivity extends Activity implements
 		});
 
 		locationText = (EditText)findViewById(R.id.locationText);
+		
 	}
 
 	@Override
@@ -51,13 +60,15 @@ public class WTFGdzieJestemActivity extends Activity implements
 			double longitude = location.getLongitude();
 			double lattitude = location.getLatitude();
 
-			DataDbAdapter dataDbAdapter = new DataDbAdapter(
-					getApplicationContext());
-			dataDbAdapter.open();
+			
 			String locationName = getHumanReadableLocation(longitude, lattitude);
+			SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putString(LONGITUDE, Double.toString(longitude));
+			editor.putString(LATTITUDE, Double.toString(lattitude));
+			editor.putString(NAME, locationName);
+			editor.commit();
 			locationText.setText(locationName);
-			dataDbAdapter.saveData(locationName, longitude, lattitude);
-			dataDbAdapter.close();
 		}
 
 	}
@@ -84,8 +95,8 @@ public class WTFGdzieJestemActivity extends Activity implements
 		Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
         
 		try {
-			List<Address> addresses = geocoder.getFromLocation(longitude,
-					lattitude, 1);
+			List<Address> addresses = geocoder.getFromLocation(lattitude,
+					longitude,1);
 
 			if (addresses != null) {
 				Address returnedAddress = addresses.get(0);
