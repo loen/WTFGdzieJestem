@@ -164,7 +164,7 @@ public class WTFGdzieJestemActivity extends Activity{
                 String destLongitude = preferences.getString(LONGITUDE, "0");
                 double srcLatitude = location.getLatitude();
                 double srcLongitude = location.getLongitude();
-                setIntent(GoogleMapsClient.getGoogleMapsIntent(valueOf(destLatitude), valueOf(destLongitude), srcLatitude, srcLongitude));
+                startActivity(GoogleMapsClient.getGoogleMapsIntent(valueOf(destLatitude), valueOf(destLongitude), srcLatitude, srcLongitude));
             }
         }
         
