@@ -3,5 +3,10 @@
 
     <string name="hello">Hello World, WTFGdzieJestemActivity!</string>
     <string name="app_name">WTFGdzieJestem</string>
+    <string name="homeLocationButtonName">Home location</string>
+    <string name="homeLocationButtonHint">Click here to get your current location</string>
+    <string name="locationTextFieldValue">Here will be your home location</string>
+    <string name="goHomeButtonName">Go Home</string>
+    <string name="goHomeButtonHint">Click here to go to your previous location</string>
 
 </resources>
