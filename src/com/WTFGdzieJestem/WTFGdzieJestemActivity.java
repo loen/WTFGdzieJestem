@@ -13,19 +13,35 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class WTFGdzieJestemActivity extends Activity implements
 		LocationListener {
 
 	private static String TAG = "WTF_Gdzie_Jestem_Location_Listener";
 	private LocationManager locationManager;
+	private Button homeLocationButton;
+	private EditText locationText;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
+		homeLocationButton = (Button)findViewById(R.id.homeLocationButton);
+		homeLocationButton.setOnClickListener(new OnClickListener() {
 
+			public void onClick(View v) {
+				initializeLocationProvider();
+
+			}
+		});
+
+		locationText = (EditText)findViewById(R.id.locationText);
 	}
 
 	@Override
@@ -39,6 +55,7 @@ public class WTFGdzieJestemActivity extends Activity implements
 					getApplicationContext());
 			dataDbAdapter.open();
 			String locationName = getHumanReadableLocation(longitude, lattitude);
+			locationText.setText(locationName);
 			dataDbAdapter.saveData(locationName, longitude, lattitude);
 			dataDbAdapter.close();
 		}
@@ -90,9 +107,13 @@ public class WTFGdzieJestemActivity extends Activity implements
 	}
 
 	private void initializeLocationProvider() {
+		try{
 		locationManager = (LocationManager) getApplicationContext()
 				.getSystemService(Context.LOCATION_SERVICE);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				60000, 0, this);
+		}catch (Exception e) {
+			Log.d(TAG, "error");
+		}
 	}
 }

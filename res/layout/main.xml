@@ -5,6 +5,7 @@
               android:orientation="vertical">
 
     <android.widget.Button
+            android:id="@+id/homeLocationButton"
             android:layout_height="70px"
             android:layout_width="fill_parent"
             android:text="@string/homeLocationButtonName"
@@ -13,6 +14,7 @@
             />
 
     <android.widget.EditText
+            android:id="@+id/locationText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/locationTextFieldValue"
