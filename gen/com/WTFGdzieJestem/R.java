@@ -18,6 +18,11 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f040001;
+        public static final int goHomeButtonHint=0x7f040006;
+        public static final int goHomeButtonName=0x7f040005;
         public static final int hello=0x7f040000;
+        public static final int homeLocationButtonHint=0x7f040003;
+        public static final int homeLocationButtonName=0x7f040002;
+        public static final int locationTextFieldValue=0x7f040004;
     }
 }
